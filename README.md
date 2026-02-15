@@ -163,12 +163,14 @@ Authorization: Bearer <your-jwt-token>
 - JWT tokens expire after 24 hours (configurable)
 - Role-based access control (USER, ADMIN)
 - CORS enabled for cross-origin requests
+- CSRF protection is disabled (standard for stateless JWT APIs where tokens are sent in headers, not cookies)
 
 **Note**: For production environments:
 - Configure CORS to allow only specific trusted origins instead of "*"
 - Use environment variables for database credentials and JWT secret
 - Generate a secure JWT secret using: `openssl rand -base64 64`
 - Set `spring.jpa.hibernate.ddl-auto=validate` or `none` to prevent schema changes
+- Use HTTPS/TLS for all communications to protect JWT tokens in transit
 
 ## License
 
