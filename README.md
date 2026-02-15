@@ -164,6 +164,12 @@ Authorization: Bearer <your-jwt-token>
 - Role-based access control (USER, ADMIN)
 - CORS enabled for cross-origin requests
 
+**Note**: For production environments:
+- Configure CORS to allow only specific trusted origins instead of "*"
+- Use environment variables for database credentials and JWT secret
+- Generate a secure JWT secret using: `openssl rand -base64 64`
+- Set `spring.jpa.hibernate.ddl-auto=validate` or `none` to prevent schema changes
+
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
