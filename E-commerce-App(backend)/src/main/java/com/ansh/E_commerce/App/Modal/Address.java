@@ -18,18 +18,26 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+
     private String name;
+
 
     private String locality;
 
+
     private String address;
+
 
     private String city;
 
+
     private String state;
+
 
     private String pinCode;
 
+
     private String mobile;
+
 
 }
