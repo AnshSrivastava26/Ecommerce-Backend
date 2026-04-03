@@ -14,7 +14,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-
 public class Product {
 
     @Id

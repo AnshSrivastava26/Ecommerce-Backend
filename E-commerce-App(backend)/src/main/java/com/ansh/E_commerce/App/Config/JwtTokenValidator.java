@@ -3,11 +3,12 @@ package com.ansh.E_commerce.App.Config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.apache.coyote.BadRequestException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,24 +26,29 @@ public class JwtTokenValidator extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwt = request.getHeader("Authorization");
-        if(jwt!=null){
+        //Bearer jwt
+        if (jwt != null) {
             jwt = jwt.substring(7);
-            try {
-                SecretKey key = Keys.hmacShaKeyFor(JWT_CONSTANT.SECRET_KEY.getBytes());
+            try{
+                SecretKey key = Keys.hmacShaKeyFor(JWT_CONSTANT.SECRETE_KEY.getBytes());
                 Claims claims = Jwts.parserBuilder().setSigningKey(key).build()
                         .parseClaimsJws(jwt).getBody();
+
                 String email = String.valueOf(claims.get("email"));
                 String authorities = String.valueOf(claims.get("authorities"));
+
                 List<GrantedAuthority> auths = AuthorityUtils
                         .commaSeparatedStringToAuthorityList(authorities);
-                Authentication authentication =  new UsernamePasswordAuthenticationToken(email,null,auths);
+
+                Authentication authentication = new UsernamePasswordAuthenticationToken(email,null,auths);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
-            catch (Exception e){
-                throw new BadCredentialsException("Invalid JWT token...");
+
+            }catch (Exception e){
+                throw  new BadRequestException("Invalid JWT token...");
             }
         }
 
         filterChain.doFilter(request,response);
+
     }
 }

@@ -16,14 +16,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String fullName;
 
     private String mobile;
